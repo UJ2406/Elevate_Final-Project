@@ -1,4 +1,4 @@
-# 🔐 Secure File Storage System
+# 🔐 Secure File Storage System (with GUI & CLI)
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![PyQt5](https://img.shields.io/badge/GUI-PyQt5-green)
@@ -20,20 +20,16 @@ A robust, local file encryption tool built with **Python**. It uses **AES-256** 
 
 ---
 
-## 📂 Repository Structure
+## 🛠️ How It Works
+* User selects (CLI or GUI) to encrypt a file; program generates/loads a master key (master.key) and stores it safely.
 
-```text
-📦 Secure-File-Storage
- ┣ 📂 encrypted_files      # Stores the actual encrypted .enc files
- ┣ 📂 decrypted_files      # Destination for files you decrypt
- ┣ 📜 secure_gui.py        # 🖥️ Main application entry point (GUI)
- ┣ 📜 secure_storage.py    # ⚙️ Core logic (Encryption, Decryption, PDF Gen)
- ┣ 📜 master.key           # 🔑 The SECRET key (Auto-generated, DO NOT SHARE)
- ┣ 📜 metadata.json.enc    # 🗃️ Encrypted database of file info
- ┣ 📜 requirements.txt     # 📦 List of python dependencies
- ┣ 📜 .gitignore           # 🙈 Files to ignore (keys, temp files)
- ┗ 📜 README.md            # 📖 This documentation
-```
+* File is read, encrypted with AES-256, and saved with a secure, encoded filename.
+
+* SHA256 hash of the encrypted file is calculated and stored in encrypted metadata (metadata.json.enc), along with file details.
+
+* Files can be decrypted (via GUI or CLI) only if the master key matches and tampering checks pass.
+
+* Users can list all encrypted files, retrieve audit details, and generate a PDF report for record-keeping.
 
 ---
 
@@ -58,12 +54,20 @@ A robust, local file encryption tool built with **Python**. It uses **AES-256** 
 ### Usage
 
 1.  **Run the App**:
+
+    * **CLI Mode**
+    ```bash
+    python secure_storage.py
+    ```
+
+    * **GUI Mode (PyQt5)**
     ```bash
     python secure_gui.py
     ```
-2.  **Encrypt**: Select a file in the "Encrypt" tab and click "Encrypt & Store".
-3.  **Decrypt**: Go to the "Decrypt" tab, select a file, and click "Decrypt".
-4.  **Report**: Click "Download PDF Report" to get a summary of your vault.
+    
+3.  **Encrypt**: Select a file in the "Encrypt" tab and click "Encrypt & Store".
+4.  **Decrypt**: Go to the "Decrypt" tab, select a file, and click "Decrypt".
+5.  **Report**: Click "Download PDF Report" to get a summary of your vault.
 
 ---
 
@@ -86,6 +90,9 @@ Building this project involves mastering several key software engineering and se
 *   **Concept**: Creating responsive applications where actions are triggered by user events (clicks, inputs).
 *   **Implementation**: Using **PyQt5** signals and slots to connect buttons to Python functions.
 
+### 5. Security automation
+*   **Concept**: PDF reporting and safe file listing for compliance/audit needs
+
 ---
 
 ## 🙋‍♀️ Interview Questions & Answers
@@ -104,7 +111,24 @@ If you put this project on your resume, be ready to answer these!
 **Q4: What happens if you lose the `master.key`?**
 > **A:** The data is permanently lost. Since AES is a secure algorithm, there is no "backdoor" to recover the data without the key. This highlights the importance of secure key management in real-world apps.
 
+**Q5: What are the advantages of GUI for security tools?**
+> **A:** A GUI lowers the technical barrier, making security accessible for non-coders and reducing user error compared to the command line.
 ---
+
+## 📂 Repository Structure
+
+```text
+📦 Secure-File-Storage
+ ┣ 📂 encrypted_files      # Stores the actual encrypted .enc files
+ ┣ 📂 decrypted_files      # Destination for files you decrypt
+ ┣ 📜 secure_gui.py        # 🖥️ Main application entry point (GUI)
+ ┣ 📜 secure_storage.py    # ⚙️ Core logic (Encryption, Decryption, PDF Gen)
+ ┣ 📜 master.key           # 🔑 The SECRET key (Auto-generated, DO NOT SHARE)
+ ┣ 📜 metadata.json.enc    # 🗃️ Encrypted database of file info
+ ┣ 📜 requirements.txt     # 📦 List of python dependencies
+ ┣ 📜 .gitignore           # 🙈 Files to ignore (keys, temp files)
+ ┗ 📜 README.md            # 📖 This documentation
+```
 
 ## 🤝 Contributing
 
