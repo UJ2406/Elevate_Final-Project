@@ -1,40 +1,115 @@
-# Secure File Storage System
+# 🔐 Secure File Storage System
 
-A local file encryption tool built with Python and PyQt5. It uses AES encryption (via the `cryptography` library) to securely store files.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![PyQt5](https://img.shields.io/badge/GUI-PyQt5-green)
+![Cryptography](https://img.shields.io/badge/Security-AES--256-red)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## Features
-- **AES Encryption**: Securely encrypt files using Fernet (symmetric encryption).
-- **Integrity Checks**: Verifies file integrity upon decryption using SHA256 hashes.
-- **GUI**: User-friendly interface built with PyQt5.
-- **Metadata Management**: Keeps track of original filenames and encryption details locally.
-- **PDF Reports**: Generate a downloadable PDF report of all your encrypted files.
+A robust, local file encryption tool built with **Python**. It uses **AES-256** encryption to secure your files and includes a modern GUI for easy interaction. Perfect for learning about cybersecurity concepts, file handling, and GUI development in Python.
 
-## Installation
+---
 
-1.  **Clone the repository** (or download the source code).
+## 🌟 Features
+
+*   **🔒 AES Encryption**: Uses the `cryptography` library (Fernet) to encrypt files with symmetric keys.
+*   **🛡️ Integrity Checks**: Verifies file integrity upon decryption using **SHA256 hashing** to detect tampering.
+*   **🖥️ User-Friendly GUI**: Built with **PyQt5**, featuring a tabbed interface for easy navigation.
+*   **📂 Metadata Management**: Locally stores original filenames, timestamps, and hashes in a secure, encrypted JSON file.
+*   **📄 PDF Reports**: Generates a downloadable PDF report listing all your encrypted files using `reportlab`.
+*   **🔑 Key Management**: Automatically generates and manages a `master.key` for encryption.
+
+---
+
+## 📂 Repository Structure
+
+```text
+📦 Secure-File-Storage
+ ┣ 📂 encrypted_files      # Stores the actual encrypted .enc files
+ ┣ 📂 decrypted_files      # Destination for files you decrypt
+ ┣ 📜 secure_gui.py        # 🖥️ Main application entry point (GUI)
+ ┣ 📜 secure_storage.py    # ⚙️ Core logic (Encryption, Decryption, PDF Gen)
+ ┣ 📜 master.key           # 🔑 The SECRET key (Auto-generated, DO NOT SHARE)
+ ┣ 📜 metadata.json.enc    # 🗃️ Encrypted database of file info
+ ┣ 📜 requirements.txt     # 📦 List of python dependencies
+ ┣ 📜 .gitignore           # 🙈 Files to ignore (keys, temp files)
+ ┗ 📜 README.md            # 📖 This documentation
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+*   Python 3.x installed.
+
+### Installation
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/UJ2406-Elevate_Final-Project.git
+    cd UJ2406-Elevate_Final-Project
+    ```
+
 2.  **Install dependencies**:
     ```bash
     pip install -r requirements.txt
     ```
 
-## Usage
+### Usage
 
-1.  **Run the Application**:
+1.  **Run the App**:
     ```bash
     python secure_gui.py
     ```
-2.  **Encrypt a File**:
-    - Go to the "Encrypt" tab.
-    - Browse and select a file.
-    - Click "Encrypt & Store File".
-3.  **Decrypt a File**:
-    - Go to the "Decrypt & Retrieve" tab.
-    - Select a file from the list.
-    - Click "Decrypt Selected File".
-    - The file will be saved in the `decrypted_files` directory.
-4.  **Download Report**:
-    - Go to the "Decrypt & Retrieve" tab.
-    - Click "Download PDF Report" to save a summary of your files.
+2.  **Encrypt**: Select a file in the "Encrypt" tab and click "Encrypt & Store".
+3.  **Decrypt**: Go to the "Decrypt" tab, select a file, and click "Decrypt".
+4.  **Report**: Click "Download PDF Report" to get a summary of your vault.
 
-## Security Note
-This tool generates a `master.key` file on the first run. **DO NOT LOSE THIS KEY.** If you lose it, you cannot decrypt your files. **DO NOT SHARE THIS KEY.** Anyone with this key can decrypt your files.
+---
+
+## 🧠 Concepts Learned
+
+Building this project involves mastering several key software engineering and security concepts:
+
+### 1. Symmetric Encryption (AES)
+*   **Concept**: Using the same key for both encryption and decryption.
+*   **Implementation**: We use `Fernet` from the `cryptography` library, which implements AES (Advanced Encryption Standard) in CBC mode with a 128-bit key, HMAC for authentication, and PKCS7 padding.
+
+### 2. Hashing & Integrity
+*   **Concept**: Ensuring data hasn't been altered.
+*   **Implementation**: We calculate the **SHA256** hash of the file *before* encryption and store it. When decrypting, we recalculate the hash of the encrypted file to ensure no one tampered with the bytes on the disk.
+
+### 3. File I/O & Binary Handling
+*   **Concept**: Reading and writing files in binary mode (`rb`, `wb`) to handle any file type (images, PDFs, executables), not just text.
+
+### 4. GUI Development (Event-Driven Programming)
+*   **Concept**: Creating responsive applications where actions are triggered by user events (clicks, inputs).
+*   **Implementation**: Using **PyQt5** signals and slots to connect buttons to Python functions.
+
+---
+
+## 🙋‍♀️ Interview Questions & Answers
+
+If you put this project on your resume, be ready to answer these!
+
+**Q1: Why did you use Symmetric Encryption (AES) instead of Asymmetric (RSA)?**
+> **A:** Symmetric encryption is significantly faster and more efficient for large data (like files). Asymmetric encryption is computationally expensive and usually limited to small data sizes (like exchanging keys).
+
+**Q2: How do you ensure the file wasn't tampered with?**
+> **A:** I use SHA256 hashing. When a file is encrypted, I calculate its hash and store it securely. Before decrypting, I calculate the hash of the file on disk again. If the hashes don't match, the system rejects the decryption, alerting the user of potential tampering.
+
+**Q3: Where do you store the metadata? Is it safe?**
+> **A:** Metadata (original filenames, hashes) is stored in a JSON file. Crucially, this JSON file is *also* encrypted using the same master key, so an attacker cannot read the file structure or see what files are stored.
+
+**Q4: What happens if you lose the `master.key`?**
+> **A:** The data is permanently lost. Since AES is a secure algorithm, there is no "backdoor" to recover the data without the key. This highlights the importance of secure key management in real-world apps.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please fork the repo and submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License.
