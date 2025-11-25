@@ -127,10 +127,7 @@ If you put this project on your resume, be ready to answer these!
  ┣ 📜 .gitignore           # 🙈 Files to ignore (keys, temp files)
  ┗ 📜 README.md            # 📖 This documentation
 ```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please fork the repo and submit a Pull Request.
+---
 
 ## 📄 License
 
