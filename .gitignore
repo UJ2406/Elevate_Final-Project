@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+
+# Security - CRITICAL
+master.key
+
+# User Data
+encrypted_files/
+decrypted_files/
+metadata.json.enc
+testdoc.txt
